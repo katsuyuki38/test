@@ -7,7 +7,7 @@ def run_timer(background_task: BackgroundTasks, seconds: int):
     time.sleep(seconds)
     print(f"Timer done! Waited for {seconds} seconds.")
 
-@app.post("/start_timer/")
+@app.get("/")
 async def start_timer(background_task: BackgroundTasks, seconds: int):
     background_task.add_task(run_timer, background_task, seconds)
     return {"message": "Timer started"}
