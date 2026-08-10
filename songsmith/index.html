@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#08111f">
+  <title>SongSmith Vocal Studio</title>
+  <style>
+    :root{color-scheme:dark;--bg:#07101d;--panel:#0f1b2e;--panel2:#13243c;--line:#2b425f;--text:#eef6ff;--muted:#91a7c2;--cyan:#22d3ee;--violet:#a78bfa;--pink:#fb7185;--ok:#34d399;--warn:#fbbf24}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(circle at 12% 0,#123469 0,transparent 30%),radial-gradient(circle at 88% 0,#46146f 0,transparent 27%),var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Sans","Yu Gothic UI",Meiryo,sans-serif}
+    button,input,select,textarea{font:inherit}.app{max-width:1500px;margin:auto;padding:18px}.top{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:14px}.brand small{color:#67e8f9;letter-spacing:.18em;font-weight:900}.brand h1{font-size:clamp(28px,5vw,48px);margin:.2rem 0}.brand p{margin:0;color:var(--muted);max-width:850px;line-height:1.55}.badge{padding:8px 12px;border:1px solid var(--line);border-radius:999px;color:#cbd5e1;background:#0b1628bb}.toolbar,.panel{background:#0d192bbb;border:1px solid #263d5a;border-radius:18px;box-shadow:0 18px 48px #0006;backdrop-filter:blur(12px)}.toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:11px;margin-bottom:12px}.btn{min-height:40px;border:1px solid #36506e;background:#14243a;color:#fff;border-radius:11px;padding:9px 13px;cursor:pointer}.btn:hover{border-color:#6b89aa}.btn.primary{border:0;background:linear-gradient(135deg,#0891b2,#7c3aed);font-weight:900}.btn.danger{color:#fecdd3;border-color:#7f1d1d}.btn:disabled{opacity:.45;cursor:not-allowed}.toolbar label{display:flex;align-items:center;gap:6px;color:#cbd5e1;font-size:13px}.toolbar input,.toolbar select{background:#08111f;border:1px solid #36506e;color:#fff;border-radius:9px;padding:7px}.toolbar input[type=number]{width:76px}.status{margin-left:auto;font-size:12px;color:#c4b5fd}.layout{display:grid;grid-template-columns:minmax(0,1fr) 350px;gap:12px}@media(max-width:1000px){.layout{grid-template-columns:1fr}}.panel{overflow:hidden}.head{padding:12px 14px;border-bottom:1px solid #263d5a;display:flex;justify-content:space-between;gap:10px;align-items:center}.head h2{font-size:16px;margin:0}.head span{font-size:11px;color:var(--muted)}.section{padding:14px}.input{display:grid;gap:5px;margin-bottom:10px}.input label{font-size:12px;color:#cbd5e1}.input input,.input textarea,.input select{width:100%;background:#08111f;border:1px solid #36506e;border-radius:10px;color:#fff;padding:9px}.input textarea{min-height:82px;resize:vertical}.moras{display:flex;gap:5px;flex-wrap:wrap;margin:8px 0}.mora{font-size:12px;padding:4px 7px;background:#111f34;border:1px solid #36506e;border-radius:7px}.hint{color:#7690ad;font-size:11px;line-height:1.55}.rollScroll{overflow:auto;max-height:590px;background:#050b14;touch-action:none}.roll{display:grid;grid-template-columns:64px 1fr;min-width:820px;user-select:none}.keys,.piano{position:relative}.keys{background:#0b1423;border-right:1px solid #334b68}.key{position:absolute;left:0;right:0;border-bottom:1px solid #1e3047;color:#6f87a3;font-size:10px;padding:3px 5px}.key.black{background:#07101c}.piano{cursor:crosshair;background:#07111e;background-image:linear-gradient(to right,#24364e 1px,transparent 1px),linear-gradient(to bottom,#24364e 1px,transparent 1px)}.beatLine{position:absolute;top:0;bottom:0;border-left:1px solid #324b6a66;pointer-events:none}.beatLine.bar{border-left:2px solid #6c87a866}.note{position:absolute;border-radius:6px;background:linear-gradient(135deg,#0891b2,#22d3ee);border:1px solid #a5f3fc;color:#06202a;box-shadow:0 4px 12px #06b6d44d;font-size:11px;font-weight:900;padding:2px 10px 2px 5px;white-space:nowrap;overflow:hidden;touch-action:none}.note.selected{background:linear-gradient(135deg,#7c3aed,#c084fc);border-color:#eadcff;color:#fff;z-index:4}.resize{position:absolute;right:0;top:0;bottom:0;width:9px;background:#fff4;cursor:ew-resize}.playhead{position:absolute;top:0;bottom:0;width:2px;background:var(--pink);box-shadow:0 0 10px var(--pink);z-index:8;display:none;pointer-events:none}.side{display:grid;gap:12px;align-content:start}.meta{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:10px}.meta div{text-align:center;background:#08111f;border:1px solid #263d5a;border-radius:10px;padding:8px}.meta b{display:block}.meta small{color:#6f87a3}.pair{display:grid;grid-template-columns:1fr 68px;gap:8px}.moveGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.outGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}@media(max-width:800px){.outGrid{grid-template-columns:1fr}}.engineState{display:flex;gap:9px;align-items:center;background:#08111f;border:1px solid #263d5a;border-radius:11px;padding:10px}.dot{width:10px;height:10px;border-radius:50%;background:#64748b}.dot.ok{background:var(--ok);box-shadow:0 0 12px var(--ok)}.dot.bad{background:var(--pink);box-shadow:0 0 12px var(--pink)}audio{width:100%;margin-top:10px}.footer{padding:14px 2px;color:#6f87a3;font-size:11px;line-height:1.6}.hidden{display:none!important}.link{color:#a5f3fc;text-decoration:none}
+  </style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="brand">
+      <small>NOINOI LAB / SONGSMITH</small>
+      <h1>Vocal Studio</h1>
+      <p>日本語の歌詞と音程を入力し、子音先行・ピッチ・ビブラート・ダイナミクス・息成分をノートごとに調整するブラウザ歌声エディタです。</p>
+    </div>
+    <div class="badge">公開テスト版</div>
+  </header>
+
+  <div class="toolbar">
+    <button class="btn primary" id="playBtn">▶ ブラウザ再生</button>
+    <button class="btn" id="stopBtn">■ 停止</button>
+    <button class="btn" id="demoBtn">デモ曲</button>
+    <button class="btn" id="saveBtn">保存</button>
+    <button class="btn" id="loadBtn">読込</button>
+    <button class="btn" id="wavBtn">簡易WAV</button>
+    <label>BPM <input id="bpm" type="number" min="40" max="240" value="112"></label>
+    <label>量子化 <select id="quant"><option value="0.25">1/16</option><option value="0.5">1/8</option><option value="1">1/4</option></select></label>
+    <span class="status" id="globalStatus">準備完了</span>
+  </div>
+
+  <div class="layout">
+    <section class="panel">
+      <div class="head"><h2>ピアノロール</h2><span>空白タップ: 追加 / ノート: 選択・ドラッグ / 右端: 長さ変更</span></div>
+      <div class="section">
+        <div class="input"><label>日本語歌詞</label><textarea id="lyrics">きっと きみを わすれない</textarea></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary" id="autoBtn">歌詞からメロディを作る</button><button class="btn" id="assignBtn">既存ノートへ歌詞だけ割当</button><button class="btn danger" id="clearBtn">全消去</button></div>
+        <div class="moras" id="moras"></div>
+        <div class="hint">「きゃ・しゅ・ちょ」は1モーラ、「っ」「ん」は個別のモーラとして扱います。</div>
+      </div>
+      <div class="rollScroll" id="rollScroll">
+        <div class="roll"><div class="keys" id="keys"></div><div class="piano" id="piano"><div class="playhead" id="playhead"></div></div></div>
+      </div>
+    </section>
+
+    <aside class="side">
+      <section class="panel section">
+        <h2 style="font-size:16px;margin:0 0 10px">選択ノート</h2>
+        <div id="emptyEditor" class="hint">ピアノロールのノートを選択してください。</div>
+        <div id="editor" class="hidden">
+          <div class="meta"><div><b id="noteName">C4</b><small>NOTE</small></div><div><b id="noteBeat">1.00</b><small>BEAT</small></div><div><b id="noteLength">1.00</b><small>LENGTH</small></div></div>
+          <div class="input"><label>歌詞 / モーラ</label><input id="lyricEdit" maxlength="8"></div>
+          <div class="moveGrid"><button class="btn" id="leftBtn">←</button><button class="btn" id="downBtn">↓</button><button class="btn" id="upBtn">↑</button><button class="btn" id="rightBtn">→</button></div>
+          <div class="input"><label>長さ</label><select id="durEdit"><option value="0.25">1/16</option><option value="0.5">1/8</option><option value="1">1/4</option><option value="2">1/2</option><option value="4">全音符</option></select></div>
+          <div class="input"><label>ピッチ微調整 (cent)</label><div class="pair"><input id="pitchEdit" type="range" min="-100" max="100"><input id="pitchNum" type="number" min="-100" max="100"></div></div>
+          <div class="input"><label>子音先行 (ms)</label><div class="pair"><input id="consEdit" type="range" min="0" max="180"><input id="consNum" type="number" min="0" max="180"></div></div>
+          <div class="input"><label>ダイナミクス</label><div class="pair"><input id="dynEdit" type="range" min="20" max="120"><input id="dynNum" type="number" min="20" max="120"></div></div>
+          <div class="input"><label>ビブラート深さ (cent)</label><div class="pair"><input id="vibEdit" type="range" min="0" max="80"><input id="vibNum" type="number" min="0" max="80"></div></div>
+          <div class="input"><label>息成分</label><div class="pair"><input id="breathEdit" type="range" min="0" max="100"><input id="breathNum" type="number" min="0" max="100"></div></div>
+          <div class="input"><label>しゃくり (cent)</label><div class="pair"><input id="scoopEdit" type="range" min="-150" max="150"><input id="scoopNum" type="number" min="-150" max="150"></div></div>
+          <button class="btn danger" id="deleteBtn" style="width:100%">選択ノートを削除</button>
+        </div>
+      </section>
+    </aside>
+  </div>
+
+  <div class="outGrid">
+    <section class="panel section">
+      <h2 style="font-size:16px;margin:0 0 8px">ブラウザ簡易出力</h2>
+      <p class="hint">サーバーなしで今すぐ確認できます。フォルマント合成のため、音質は確認用です。</p>
+      <div class="engineState"><span class="dot ok"></span><div><b>利用可能</b><div class="hint">再生・簡易WAV書き出しに対応</div></div></div>
+    </section>
+
+    <section class="panel section">
+      <h2 style="font-size:16px;margin:0 0 8px">VOICEVOX歌唱出力</h2>
+      <div class="input"><label>Vocal API URL</label><input id="apiUrl" value="https://voice.test.noinoi.xyz" inputmode="url"></div>
+      <div class="input"><label>APIキー（設定時のみ）</label><input id="apiKey" type="password" autocomplete="off" placeholder="未設定"></div>
+      <div class="engineState"><span class="dot" id="voiceDot"></span><div><b id="voiceState">未確認</b><div class="hint" id="voiceDetail">接続確認を押してください。</div></div></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><button class="btn" id="healthBtn">接続確認</button><button class="btn primary" id="voiceBtn">✨ VOICEVOXで歌声生成</button><button class="btn" id="voiceDownload" disabled>WAV保存</button></div>
+      <audio id="voiceAudio" controls></audio>
+      <p class="hint" style="color:var(--warn)">VOICEVOX本体は別サーバーで動かします。現在このURLが未開通の場合でも、左のブラウザ簡易出力は使えます。</p>
+    </section>
+  </div>
+
+  <div class="footer"><a class="link" href="../">← noinoi LABへ戻る</a><br>VOICEVOXは公式の歌唱APIへ接続する構成です。この画面自体はStar8上の静的サイトとして動作します。</div>
+</div>
+<script>
+(() => {
+  'use strict'
+  const $ = (id) => document.getElementById(id)
+  const ROW_H = 24, MIN_MIDI = 48, MAX_MIDI = 79, BEATS = 24, PX_BEAT = 42
+  const names = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B']
+  const formants = {a:[800,1150,2900],i:[350,2100,3000],u:[400,900,2400],e:[500,1900,2600],o:[450,800,2830],n:[300,1200,2100]}
+  const state = {notes:[], selected:null, context:null, timer:null, playing:false, startedAt:0, voiceBlob:null}
+  const smallKana = 'ゃゅょぁぃぅぇぉャュョァィゥェォ'
+  const vowelMap = {
+    あ:'a',か:'a',が:'a',さ:'a',ざ:'a',た:'a',だ:'a',な:'a',は:'a',ば:'a',ぱ:'a',ま:'a',や:'a',ら:'a',わ:'a',
+    い:'i',き:'i',ぎ:'i',し:'i',じ:'i',ち:'i',ぢ:'i',に:'i',ひ:'i',び:'i',ぴ:'i',み:'i',り:'i',
+    う:'u',く:'u',ぐ:'u',す:'u',ず:'u',つ:'u',づ:'u',ぬ:'u',ふ:'u',ぶ:'u',ぷ:'u',む:'u',ゆ:'u',る:'u',
+    え:'e',け:'e',げ:'e',せ:'e',ぜ:'e',て:'e',で:'e',ね:'e',へ:'e',べ:'e',ぺ:'e',め:'e',れ:'e',
+    お:'o',こ:'o',ご:'o',そ:'o',ぞ:'o',と:'o',ど:'o',の:'o',ほ:'o',ぼ:'o',ぽ:'o',も:'o',よ:'o',ろ:'o',を:'o',ん:'n'
+  }
+  const clamp = (v,a,b) => Math.max(a,Math.min(b,v))
+  const uid = () => Math.random().toString(36).slice(2,10)
+  const quant = () => Number($('quant').value) || .25
+  const snap = (v) => Math.round(v / quant()) * quant()
+  const midiName = (m) => names[m % 12] + (Math.floor(m / 12) - 1)
+  const midiHz = (m,c=0) => 440 * Math.pow(2,(m - 69 + c / 100) / 12)
+  const selected = () => state.notes.find(n => n.id === state.selected) || null
+  const defaultNote = (midi=60,start=0,dur=1,lyric='あ') => ({id:uid(),midi,start,dur,lyric,pitch:0,cons:55,dyn:85,vib:22,vibRate:5.4,breath:18,scoop:-35})
+
+  function toHiragana(text){return [...text].map(c=>{const n=c.charCodeAt(0);return n>=0x30a1&&n<=0x30f6?String.fromCharCode(n-0x60):c}).join('')}
+  function tokenize(text){const out=[];const clean=text.replace(/[\s、。,.!！?？「」『』（）()・…ー]+/g,'');for(const ch of [...clean]){if(smallKana.includes(ch)&&out.length)out[out.length-1]+=ch;else out.push(ch)}return out}
+  function moraVowel(mora){let m=toHiragana(mora||'あ');if(m==='ん')return'n';if(m==='っ')return'u';const last=m.at(-1);if('ゃぁ'.includes(last))return'a';if('ゅぅ'.includes(last))return'u';if('ょぉ'.includes(last))return'o';if(last==='ぃ')return'i';if(last==='ぇ')return'e';for(const c of [...m].reverse())if(vowelMap[c])return vowelMap[c];return'a'}
+  function showMoras(){const ms=tokenize($('lyrics').value);$('moras').innerHTML='';ms.forEach(m=>{const e=document.createElement('span');e.className='mora';e.textContent=m;$('moras').appendChild(e)});return ms}
+  function setStatus(text){$('globalStatus').textContent=text}
+
+  function setupRoll(){const height=(MAX_MIDI-MIN_MIDI+1)*ROW_H;$('keys').style.height=$('piano').style.height=height+'px';$('piano').style.width=(BEATS*PX_BEAT)+'px';for(let m=MAX_MIDI;m>=MIN_MIDI;m--){const e=document.createElement('div');e.className='key '+([1,3,6,8,10].includes(m%12)?'black':'');e.style.top=((MAX_MIDI-m)*ROW_H)+'px';e.style.height=ROW_H+'px';e.textContent=midiName(m);$('keys').appendChild(e)}for(let b=0;b<=BEATS;b++){const l=document.createElement('div');l.className='beatLine'+(b%4===0?' bar':'');l.style.left=(b*PX_BEAT)+'px';$('piano').appendChild(l)}}
+  function render(){document.querySelectorAll('.note').forEach(e=>e.remove());for(const n of state.notes){const e=document.createElement('div');e.className='note'+(state.selected===n.id?' selected':'');e.dataset.id=n.id;e.style.left=(n.start*PX_BEAT+1)+'px';e.style.top=((MAX_MIDI-n.midi)*ROW_H+2)+'px';e.style.width=Math.max(14,n.dur*PX_BEAT-2)+'px';e.style.height=(ROW_H-4)+'px';e.textContent=n.lyric||midiName(n.midi);const r=document.createElement('span');r.className='resize';e.appendChild(r);$('piano').appendChild(e)}renderEditor()}
+  function renderEditor(){const n=selected();$('emptyEditor').classList.toggle('hidden',!!n);$('editor').classList.toggle('hidden',!n);if(!n)return;$('noteName').textContent=midiName(n.midi);$('noteBeat').textContent=(n.start+1).toFixed(2);$('noteLength').textContent=n.dur.toFixed(2);$('lyricEdit').value=n.lyric;$('durEdit').value=String(n.dur);for(const [id,key] of [['pitchEdit','pitch'],['pitchNum','pitch'],['consEdit','cons'],['consNum','cons'],['dynEdit','dyn'],['dynNum','dyn'],['vibEdit','vib'],['vibNum','vib'],['breathEdit','breath'],['breathNum','breath'],['scoopEdit','scoop'],['scoopNum','scoop']])$(id).value=n[key]}
+  function autoMelody(){const ms=showMoras();if(!ms.length)return;const melody=[60,62,64,67,69,67,64,62,60,64,67,69];state.notes=[];let beat=0;ms.forEach((m,i)=>{let dur=(i%4===3||i===ms.length-1)?1:.5;const n=defaultNote(melody[i%melody.length],beat,dur,m);n.vib=dur>=1?30:16;n.dyn=78+(i%5)*5;n.scoop=-25-(i%3)*8;state.notes.push(n);beat+=dur});state.selected=state.notes[0]?.id||null;render();setStatus(`${ms.length}モーラのメロディを作成しました`)}
+  function assignLyrics(){const ms=showMoras();if(!ms.length||!state.notes.length)return;[...state.notes].sort((a,b)=>a.start-b.start||b.midi-a.midi).forEach((n,i)=>n.lyric=ms[i%ms.length]);render();setStatus('歌詞を割り当てました')}
+  function moveSelected(dx,dy){const n=selected();if(!n)return;n.start=clamp(snap(n.start+dx),0,BEATS-n.dur);n.midi=clamp(n.midi+dy,MIN_MIDI,MAX_MIDI);render()}
+  function syncPair(rangeId,numId,key){const apply=(value)=>{const n=selected();if(!n)return;n[key]=Number(value);$(rangeId).value=value;$(numId).value=value;renderEditor()};$(rangeId).addEventListener('input',e=>apply(e.target.value));$(numId).addEventListener('input',e=>apply(e.target.value))}
+
+  function noiseBuffer(ctx,duration){const len=Math.max(1,Math.floor(ctx.sampleRate*duration));const b=ctx.createBuffer(1,len,ctx.sampleRate),d=b.getChannelData(0);for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*(1-i/len);return b}
+  function consonantType(m){const c=(m||'')[0]||'';if('さしすせそざじずぜぞサシスセソザジズゼゾ'.includes(c))return's';if('はひふへほハヒフヘホ'.includes(c))return'h';if('かきくけこがぎぐげごカキクケコガギグゲゴ'.includes(c))return'k';if('たちつてとだぢづでどタチツテトダヂヅデド'.includes(c))return't';return''}
+  function scheduleVoice(ctx,dest,n,start,duration){if(n.lyric==='っ'||n.lyric==='ッ')return;const fs=formants[moraVowel(n.lyric)]||formants.a;const end=start+duration,amp=clamp(n.dyn/100,.08,1)*.22;const master=ctx.createGain();master.gain.setValueAtTime(.0001,start);master.gain.linearRampToValueAtTime(amp,start+.025);master.gain.setValueAtTime(amp,Math.max(start+.03,end-.06));master.gain.exponentialRampToValueAtTime(.0001,end);master.connect(dest);const osc=ctx.createOscillator();osc.type='sawtooth';const base=midiHz(n.midi,n.pitch),scoop=midiHz(n.midi,n.pitch+n.scoop);osc.frequency.setValueAtTime(scoop,start);osc.frequency.exponentialRampToValueAtTime(base,start+Math.min(.11,duration*.22));fs.forEach((f,i)=>{const bp=ctx.createBiquadFilter(),g=ctx.createGain();bp.type='bandpass';bp.frequency.value=f;bp.Q.value=i?8:5;g.gain.value=[1,.55,.26][i];osc.connect(bp);bp.connect(g);g.connect(master)});const lfo=ctx.createOscillator(),lg=ctx.createGain();lfo.frequency.value=n.vibRate||5.4;lg.gain.value=base*(Math.pow(2,n.vib/1200)-1);lfo.connect(lg);lg.connect(osc.frequency);const vibStart=start+Math.min(.22,duration*.45);lfo.start(vibStart);lfo.stop(end);osc.start(start);osc.stop(end+.02);const breath=ctx.createBufferSource(),bf=ctx.createBiquadFilter(),bg=ctx.createGain();breath.buffer=noiseBuffer(ctx,duration);bf.type='highpass';bf.frequency.value=2500;bg.gain.value=n.breath/100*.06;breath.connect(bf);bf.connect(bg);bg.connect(master);breath.start(start);breath.stop(end);const ct=consonantType(n.lyric),lead=Math.min(duration*.4,n.cons/1000);if(ct&&lead){const src=ctx.createBufferSource(),cf=ctx.createBiquadFilter(),cg=ctx.createGain(),cs=Math.max(0,start-lead);src.buffer=noiseBuffer(ctx,lead+.03);cf.type=ct==='s'?'bandpass':'highpass';cf.frequency.value=ct==='s'?5200:ct==='h'?2200:3000;cf.Q.value=ct==='s'?2:1;cg.gain.setValueAtTime(.0001,cs);cg.gain.linearRampToValueAtTime(.12,start-.005);cg.gain.exponentialRampToValueAtTime(.0001,start+.02);src.connect(cf);cf.connect(cg);cg.connect(dest);src.start(cs);src.stop(start+.03)}}
+  function endBeat(){return state.notes.length?Math.max(...state.notes.map(n=>n.start+n.dur)):0}
+  async function play(){stop();if(!state.notes.length)return setStatus('ノートがありません');const Ctx=window.AudioContext||window.webkitAudioContext;const ctx=new Ctx();state.context=ctx;await ctx.resume();const comp=ctx.createDynamicsCompressor();comp.threshold.value=-16;comp.ratio.value=3;comp.connect(ctx.destination);const spb=60/(Number($('bpm').value)||112),lead=.15,now=ctx.currentTime+lead;state.notes.forEach(n=>scheduleVoice(ctx,comp,n,now+n.start*spb,n.dur*spb));state.playing=true;state.startedAt=performance.now()+lead*1000;$('playhead').style.display='block';animate();state.timer=setTimeout(stop,(lead+endBeat()*spb+.4)*1000);setStatus('ブラウザ簡易歌声を再生中')}
+  function animate(){if(!state.playing)return;const elapsed=Math.max(0,(performance.now()-state.startedAt)/1000),b=elapsed*(Number($('bpm').value)||112)/60;$('playhead').style.left=(b*PX_BEAT)+'px';requestAnimationFrame(animate)}
+  function stop(){state.playing=false;if(state.timer)clearTimeout(state.timer);state.timer=null;if(state.context){try{state.context.close()}catch{}state.context=null}$('playhead').style.display='none';setStatus('停止')}
+  function encodeWav(buffer){const ch=buffer.numberOfChannels,sr=buffer.sampleRate,len=buffer.length,ab=new ArrayBuffer(44+len*ch*2),v=new DataView(ab);const s=(o,t)=>[...t].forEach((c,i)=>v.setUint8(o+i,c.charCodeAt(0)));s(0,'RIFF');v.setUint32(4,ab.byteLength-8,true);s(8,'WAVE');s(12,'fmt ');v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,ch,true);v.setUint32(24,sr,true);v.setUint32(28,sr*ch*2,true);v.setUint16(32,ch*2,true);v.setUint16(34,16,true);s(36,'data');v.setUint32(40,len*ch*2,true);let o=44;for(let i=0;i<len;i++)for(let c=0;c<ch;c++){const x=clamp(buffer.getChannelData(c)[i],-1,1);v.setInt16(o,x<0?x*32768:x*32767,true);o+=2}return ab}
+  function download(name,blob){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1200)}
+  async function exportWav(){if(!state.notes.length)return setStatus('ノートがありません');setStatus('簡易WAVを作成中…');const sr=44100,spb=60/(Number($('bpm').value)||112),duration=endBeat()*spb+.6,ctx=new OfflineAudioContext(1,Math.ceil(duration*sr),sr),comp=ctx.createDynamicsCompressor();comp.connect(ctx.destination);state.notes.forEach(n=>scheduleVoice(ctx,comp,n,.15+n.start*spb,n.dur*spb));const rendered=await ctx.startRendering();download('songsmith-browser-vocal.wav',new Blob([encodeWav(rendered)],{type:'audio/wav'}));setStatus('簡易WAVを書き出しました')}
+
+  function project(){return{version:3,bpm:Number($('bpm').value)||112,lyrics:$('lyrics').value,notes:state.notes}}
+  function save(){localStorage.setItem('noinoi-songsmith-v3',JSON.stringify(project()));setStatus('この端末に保存しました')}
+  function load(){try{const p=JSON.parse(localStorage.getItem('noinoi-songsmith-v3')||'null');if(!p)throw new Error();$('bpm').value=p.bpm||112;$('lyrics').value=p.lyrics||'';state.notes=(p.notes||[]).map(n=>({...defaultNote(),...n,id:n.id||uid()}));state.selected=state.notes[0]?.id||null;showMoras();render();setStatus('保存データを読み込みました')}catch{setStatus('保存データがないためデモを使います');demo()}}
+  function demo(){$('lyrics').value='きっと きみを わすれない';autoMelody()}
+
+  function apiBase(){return $('apiUrl').value.trim().replace(/\/$/,'')}
+  function apiHeaders(json=false){const h={};if(json)h['content-type']='application/json';const key=$('apiKey').value.trim();if(key)h['x-api-key']=key;return h}
+  async function checkVoicevox(){const base=apiBase();localStorage.setItem('noinoi-songsmith-api',base);localStorage.setItem('noinoi-songsmith-api-key',$('apiKey').value);$('voiceState').textContent='確認中…';$('voiceDot').className='dot';try{const r=await fetch(base+'/health',{headers:apiHeaders(false)});const j=await r.json();if(!r.ok)throw new Error(j.message||JSON.stringify(j));$('voiceDot').className='dot ok';$('voiceState').textContent='VOICEVOX接続OK';$('voiceDetail').textContent=`engine=${j.activeEngine||j.vocalEngineMode||'voicevox'} / reachable=${j.voicevoxReachable??'-'}`}catch(e){$('voiceDot').className='dot bad';$('voiceState').textContent='未接続';$('voiceDetail').textContent=e.message;setStatus('VOICEVOX APIにはまだ接続できません')}}
+  async function renderVoicevox(){if(!state.notes.length)return setStatus('ノートがありません');$('voiceBtn').disabled=true;$('voiceBtn').textContent='生成中…';try{const payload={...project(),title:'noinoi-songsmith'};const r=await fetch(apiBase()+'/vocal/render',{method:'POST',headers:apiHeaders(true),body:JSON.stringify(payload)});if(!r.ok)throw new Error(await r.text());state.voiceBlob=await r.blob();if($('voiceAudio').src)URL.revokeObjectURL($('voiceAudio').src);$('voiceAudio').src=URL.createObjectURL(state.voiceBlob);$('voiceDownload').disabled=false;$('voiceAudio').play().catch(()=>{});$('voiceDot').className='dot ok';$('voiceState').textContent='生成完了';$('voiceDetail').textContent='VOICEVOX歌唱WAVを受信しました';setStatus('VOICEVOX歌声を生成しました')}catch(e){$('voiceDot').className='dot bad';$('voiceState').textContent='生成失敗';$('voiceDetail').textContent=e.message;setStatus('VOICEVOX生成に失敗しました')}finally{$('voiceBtn').disabled=false;$('voiceBtn').textContent='✨ VOICEVOXで歌声生成'}}
+
+  $('piano').addEventListener('pointerdown',e=>{const noteEl=e.target.closest('.note'),rect=$('piano').getBoundingClientRect();if(!noteEl){const start=clamp(snap((e.clientX-rect.left)/PX_BEAT),0,BEATS-.25),row=clamp(Math.floor((e.clientY-rect.top)/ROW_H),0,MAX_MIDI-MIN_MIDI),n=defaultNote(MAX_MIDI-row,start,1,'あ');state.notes.push(n);state.selected=n.id;render();return}e.preventDefault();state.selected=noteEl.dataset.id;render();const n=selected(),sx=e.clientX,sy=e.clientY,orig={start:n.start,midi:n.midi,dur:n.dur},resizing=e.target.classList.contains('resize');noteEl.setPointerCapture(e.pointerId);const move=ev=>{if(resizing)n.dur=clamp(snap(orig.dur+(ev.clientX-sx)/PX_BEAT),.25,BEATS-n.start);else{n.start=clamp(snap(orig.start+(ev.clientX-sx)/PX_BEAT),0,BEATS-n.dur);n.midi=clamp(orig.midi-Math.round((ev.clientY-sy)/ROW_H),MIN_MIDI,MAX_MIDI)}noteEl.style.left=(n.start*PX_BEAT+1)+'px';noteEl.style.top=((MAX_MIDI-n.midi)*ROW_H+2)+'px';noteEl.style.width=Math.max(14,n.dur*PX_BEAT-2)+'px';renderEditor()};const up=()=>{noteEl.removeEventListener('pointermove',move);noteEl.removeEventListener('pointerup',up);noteEl.removeEventListener('pointercancel',up);render()};noteEl.addEventListener('pointermove',move);noteEl.addEventListener('pointerup',up);noteEl.addEventListener('pointercancel',up)})
+
+  $('lyrics').addEventListener('input',showMoras);$('autoBtn').onclick=autoMelody;$('assignBtn').onclick=assignLyrics;$('clearBtn').onclick=()=>{stop();state.notes=[];state.selected=null;render();setStatus('全消去しました')};$('playBtn').onclick=play;$('stopBtn').onclick=stop;$('demoBtn').onclick=demo;$('saveBtn').onclick=save;$('loadBtn').onclick=load;$('wavBtn').onclick=exportWav;$('lyricEdit').oninput=e=>{const n=selected();if(n){n.lyric=e.target.value;render()}};$('durEdit').onchange=e=>{const n=selected();if(n){n.dur=Number(e.target.value);render()}};$('leftBtn').onclick=()=>moveSelected(-quant(),0);$('rightBtn').onclick=()=>moveSelected(quant(),0);$('upBtn').onclick=()=>moveSelected(0,1);$('downBtn').onclick=()=>moveSelected(0,-1);$('deleteBtn').onclick=()=>{state.notes=state.notes.filter(n=>n.id!==state.selected);state.selected=null;render()};syncPair('pitchEdit','pitchNum','pitch');syncPair('consEdit','consNum','cons');syncPair('dynEdit','dynNum','dyn');syncPair('vibEdit','vibNum','vib');syncPair('breathEdit','breathNum','breath');syncPair('scoopEdit','scoopNum','scoop');$('healthBtn').onclick=checkVoicevox;$('voiceBtn').onclick=renderVoicevox;$('voiceDownload').onclick=()=>state.voiceBlob&&download('songsmith-voicevox.wav',state.voiceBlob);$('apiUrl').value=localStorage.getItem('noinoi-songsmith-api')||$('apiUrl').value;$('apiKey').value=localStorage.getItem('noinoi-songsmith-api-key')||'';document.addEventListener('keydown',e=>{if(e.code==='Space'&&!['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)){e.preventDefault();state.playing?stop():play()}if((e.key==='Delete'||e.key==='Backspace')&&!['INPUT','TEXTAREA'].includes(document.activeElement.tagName)&&state.selected){state.notes=state.notes.filter(n=>n.id!==state.selected);state.selected=null;render()}})
+
+  setupRoll();showMoras();demo()
+})()
+</script>
+</body>
+</html>
