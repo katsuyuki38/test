@@ -8,7 +8,8 @@
   <style>
     *{box-sizing:border-box} body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f4f7fb;color:#0f172a}
     .wrap{max-width:760px;margin:0 auto;padding:24px 18px 80px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:22px}.brand{font-size:13px;font-weight:800;letter-spacing:.12em;color:#2563eb}.pill{font-size:12px;background:#e8f0ff;color:#1d4ed8;padding:7px 10px;border-radius:999px;font-weight:700}
-    h1{font-size:clamp(32px,8vw,54px);margin:6px 0 8px}.sub{color:#64748b;margin:0 0 26px;line-height:1.6}.card{background:#fff;border-radius:24px;padding:18px;box-shadow:0 14px 40px rgba(15,23,42,.08)}
+    h1{font-size:clamp(32px,8vw,54px);margin:6px 0 8px}.sub{color:#64748b;margin:0 0 18px;line-height:1.6}.card{background:#fff;border-radius:24px;padding:18px;box-shadow:0 14px 40px rgba(15,23,42,.08)}
+    .launch{display:flex;align-items:center;gap:12px;margin:0 0 20px;padding:15px 16px;border-radius:18px;text-decoration:none;color:#fff;background:linear-gradient(135deg,#0891b2,#7c3aed);box-shadow:0 12px 30px rgba(67,56,202,.25)}.launch .icon{font-size:27px}.launch .copy{flex:1;display:grid;gap:3px}.launch b{font-size:16px}.launch small{color:#dbeafe;line-height:1.35}.launch strong{font-size:13px;white-space:nowrap}.launch:active{transform:translateY(1px)}
     .inputRow{display:grid;grid-template-columns:1fr auto;gap:10px}.inputRow input{width:100%;border:1px solid #dbe3ef;border-radius:14px;padding:14px 15px;font-size:16px;outline:none}.inputRow input:focus{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.1)}
     button{border:0;border-radius:14px;padding:0 16px;font-weight:800;font-size:15px;cursor:pointer}.add{background:#2563eb;color:#fff}.stats{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}.stat{background:#f8fafc;padding:10px 12px;border-radius:12px;font-size:13px;color:#475569}.stat b{color:#0f172a}
     ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}.item{display:flex;align-items:center;gap:12px;padding:14px;border:1px solid #e6ebf2;border-radius:16px;background:#fff}.item.done .text{text-decoration:line-through;color:#94a3b8}.check{width:24px;height:24px;border-radius:8px;border:2px solid #cbd5e1;background:#fff;display:grid;place-items:center;padding:0;flex:0 0 auto}.item.done .check{background:#22c55e;border-color:#22c55e;color:#fff}.text{flex:1;word-break:break-word}.del{background:#fff1f2;color:#e11d48;padding:8px 10px;border-radius:10px}.empty{text-align:center;color:#94a3b8;padding:26px 10px}
@@ -21,6 +22,11 @@
     <div class="top"><div class="brand">NOINOI LAB</div><div class="pill">test.noinoi.xyz</div></div>
     <h1>ミニ・タスク</h1>
     <p class="sub">iPhoneだけで使える、超シンプルなToDoです。入力内容はこの端末のブラウザ内に保存されます。</p>
+    <a class="launch" href="./songsmith/">
+      <span class="icon">🎵</span>
+      <span class="copy"><b>SongSmith Vocal Studio</b><small>歌詞・音程入力、簡易歌声再生、VOICEVOX接続</small></span>
+      <strong>開く →</strong>
+    </a>
     <section class="card">
       <div class="inputRow">
         <input id="taskInput" type="text" placeholder="やることを入力" autocomplete="off">
@@ -32,7 +38,7 @@
       <button class="clear" id="clearDone">完了したタスクを削除</button>
       <div class="notice">✓ このアプリはChatGPTからGitHubへ更新し、GitHub Actions経由でStar8へ自動デプロイしています。</div>
     </section>
-    <div class="footer">noinoi LAB / first interactive app</div>
+    <div class="footer">noinoi LAB / interactive apps</div>
   </main>
   <script>
     const KEY='noinoi-mini-task-v1';
