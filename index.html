@@ -11,6 +11,14 @@
 <section class="card hidden" id="quiz"><div class="progress"><div class="bar" id="bar"></div></div><div class="qno" id="qno"></div><div class="question" id="question"></div><div id="answers"></div></section>
 <section class="card hidden resultBox" id="result"><div class="tag">診断結果</div><div class="hero" id="emoji">😎</div><div class="type" id="type"></div><p class="desc" id="desc"></p><div class="traits" id="traits"></div><button class="share" id="shareBtn">結果をシェアする</button><button class="again" id="againBtn">もう一度やる</button></section><div class="small">noinoi LAB / test.noinoi.xyz</div></main>
 <script>
+function track(event,result=''){
+  const body=new URLSearchParams({event});
+  if(result!=='') body.set('result',String(result));
+  try{
+    if(navigator.sendBeacon){navigator.sendBeacon('analytics.php',body);}
+    else{fetch('analytics.php',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:body.toString(),keepalive:true}).catch(()=>{});}
+  }catch(e){}
+}
 const qs=[
 ['夏休み初日、まず何する？',['予定表を作る','とりあえず遊ぶ','宿題を少し進める','昼まで寝る']],
 ['宿題はいつやる？',['最初の1週間','毎日ちょっとずつ','気が向いた時','最後の3日']],
@@ -36,7 +44,8 @@ const $=id=>document.getElementById(id);
 function show(id){['home','quiz','result'].forEach(x=>$(x).classList.toggle('hidden',x!==id))}
 function render(){const q=qs[i];$('bar').style.width=((i)/qs.length*100)+'%';$('qno').textContent=`Q${i+1} / ${qs.length}`;$('question').textContent=q[0];$('answers').innerHTML='';q[1].forEach((a,idx)=>{const b=document.createElement('button');b.className='answer';b.textContent=a;b.onclick=()=>pick(idx);$('answers').appendChild(b)})}
 function pick(idx){const map=[[0,1,2,3],[0,2,1,3],[0,1,5,3],[4,2,1,7],[0,1,2,3],[0,1,6,5],[0,1,2,3],[0,6,2,7]];s[map[i][idx]]+=2;s[(map[i][idx]+4)%8]+=1;i++;if(i<qs.length)render();else finish()}
-function finish(){let n=s.indexOf(Math.max(...s));const t=types[n];$('emoji').textContent=t[1];$('type').textContent=t[0];$('desc').textContent=t[2];$('traits').innerHTML=t[3].map(x=>`<div class="trait">✓ ${x}</div>`).join('');history.replaceState(null,'',location.pathname+'?result='+n);show('result')}
-$('startBtn').onclick=()=>{i=0;s.fill(0);show('quiz');render()};$('againBtn').onclick=()=>{history.replaceState(null,'',location.pathname);show('home')};$('shareBtn').onclick=async()=>{const text=`私の夏休みタイプは「${$('type').textContent}」でした🌻\nあなたは何タイプ？`;const url=location.href;try{if(navigator.share)await navigator.share({title:'夏休みタイプ診断',text,url});else{await navigator.clipboard.writeText(text+'\n'+url);alert('結果をコピーしました')}}catch(e){}};
-const p=new URLSearchParams(location.search);if(p.has('result')){const n=Math.max(0,Math.min(7,Number(p.get('result'))||0));const t=types[n];$('emoji').textContent=t[1];$('type').textContent=t[0];$('desc').textContent=t[2];$('traits').innerHTML=t[3].map(x=>`<div class="trait">✓ ${x}</div>`).join('');show('result')}
+function finish(){let n=s.indexOf(Math.max(...s));const t=types[n];$('emoji').textContent=t[1];$('type').textContent=t[0];$('desc').textContent=t[2];$('traits').innerHTML=t[3].map(x=>`<div class="trait">✓ ${x}</div>`).join('');history.replaceState(null,'',location.pathname+'?result='+n);track('complete',n);show('result')}
+$('startBtn').onclick=()=>{i=0;s.fill(0);track('start');show('quiz');render()};$('againBtn').onclick=()=>{history.replaceState(null,'',location.pathname);show('home')};$('shareBtn').onclick=async()=>{track('share');const text=`私の夏休みタイプは「${$('type').textContent}」でした🌻\nあなたは何タイプ？`;const url=location.href;try{if(navigator.share)await navigator.share({title:'夏休みタイプ診断',text,url});else{await navigator.clipboard.writeText(text+'\n'+url);alert('結果をコピーしました')}}catch(e){}};
+track('page_view');
+const p=new URLSearchParams(location.search);if(p.has('result')){const n=Math.max(0,Math.min(7,Number(p.get('result'))||0));const t=types[n];$('emoji').textContent=t[1];$('type').textContent=t[0];$('desc').textContent=t[2];$('traits').innerHTML=t[3].map(x=>`<div class="trait">✓ ${x}</div>`).join('');track('result_view',n);show('result')}
 </script></body></html>
