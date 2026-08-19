@@ -23,6 +23,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -60,7 +62,9 @@ jobs:
             echo 'Voicebank unchanged.'
           else
             git commit -m 'Build PJS RealVoice browser bank'
-            git push origin master
+            git fetch origin master
+            git rebase origin/master
+            git push origin HEAD:master
           fi
 
       - name: Deploy generated bank to Star8
