@@ -1,0 +1,80 @@
+name: Build PJS RealVoice bank
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+    paths:
+      - 'scripts/build_pjs_voicebank.py'
+      - '.github/workflows/build-pjs-voicebank.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pjs-realvoice-bank
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install downloader
+        run: python -m pip install --disable-pip-version-check gdown
+
+      - name: Download PJS corpus v1.1
+        run: |
+          mkdir -p /tmp/pjs-corpus
+          gdown 'https://drive.google.com/uc?id=1hPHwOkSe2Vnq6hXrhVtzNskJjVMQmvN_' -O /tmp/PJS_corpus_ver1.1.zip
+          unzip -q /tmp/PJS_corpus_ver1.1.zip -d /tmp/pjs-corpus
+
+      - name: Download human-corrected labels
+        run: git clone --depth 1 https://github.com/UtaUtaUtau/pjs-manual-labels.git /tmp/pjs-manual-labels
+
+      - name: Build compact browser voicebank
+        run: |
+          python scripts/build_pjs_voicebank.py \
+            --corpus /tmp/pjs-corpus \
+            --labels /tmp/pjs-manual-labels/lab \
+            --out songsmith/voicebank/pjs \
+            --max-units 160
+          du -sh songsmith/voicebank/pjs
+          test -f songsmith/voicebank/pjs/manifest.json
+
+      - name: Commit generated voicebank
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add songsmith/voicebank/pjs
+          if git diff --cached --quiet; then
+            echo 'Voicebank unchanged.'
+          else
+            git commit -m 'Build PJS RealVoice browser bank'
+            git push origin master
+          fi
+
+      - name: Deploy generated bank to Star8
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        with:
+          server: sv10008.star.ne.jp
+          username: ${{ secrets.STAR8_FTP_USERNAME }}
+          password: ${{ secrets.STAR8_FTP_PASSWORD }}
+          protocol: ftp
+          port: 21
+          local-dir: ./
+          server-dir: ./
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            scripts/**
