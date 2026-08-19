@@ -1,4 +1,4 @@
-name: Build PJS RealVoice bank
+name: Build PJS RealVoice preview
 
 on:
   workflow_dispatch:
@@ -7,6 +7,7 @@ on:
       - master
     paths:
       - 'scripts/build_pjs_voicebank.py'
+      - 'scripts/render_pjs_demo.py'
       - '.github/workflows/build-pjs-voicebank.yml'
 
 permissions:
@@ -14,12 +15,12 @@ permissions:
 
 concurrency:
   group: pjs-realvoice-bank
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 20
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -31,29 +32,52 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install downloader
-        run: python -m pip install --disable-pip-version-check gdown
-
-      - name: Download PJS corpus v1.1
+      - name: Install audio tools
         run: |
-          mkdir -p /tmp/pjs-corpus
-          gdown 'https://drive.google.com/uc?id=1hPHwOkSe2Vnq6hXrhVtzNskJjVMQmvN_' -O /tmp/PJS_corpus_ver1.1.zip
-          unzip -q /tmp/PJS_corpus_ver1.1.zip -d /tmp/pjs-corpus
+          python -m pip install --disable-pip-version-check gdown
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+
+      - name: Download official PJS singing sample
+        run: |
+          mkdir -p /tmp/pjs-preview
+          gdown 'https://drive.google.com/uc?id=1NJ3_xuUFPRUfpI276yce1mcsHPpVdoCM' -O /tmp/pjs056_original.wav
+          ffmpeg -hide_banner -loglevel error -y \
+            -i /tmp/pjs056_original.wav \
+            -ac 1 -ar 48000 -sample_fmt s16 \
+            /tmp/pjs-preview/pjs056_song.wav
+          test -s /tmp/pjs-preview/pjs056_song.wav
 
       - name: Download human-corrected labels
         run: git clone --depth 1 https://github.com/UtaUtaUtau/pjs-manual-labels.git /tmp/pjs-manual-labels
 
-      - name: Build compact browser voicebank
+      - name: Build preview browser voicebank
         run: |
           python scripts/build_pjs_voicebank.py \
-            --corpus /tmp/pjs-corpus \
+            --corpus /tmp/pjs-preview \
             --labels /tmp/pjs-manual-labels/lab \
             --out songsmith/voicebank/pjs \
             --max-units 160
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          path = Path('songsmith/voicebank/pjs/manifest.json')
+          data = json.loads(path.read_text(encoding='utf-8'))
+          data['name'] = 'PJS RealVoice Preview — pjs056'
+          data['preview_phrase'] = 'きみを きりたおした'
+          data['preview_source_file'] = 'pjs056_song.wav'
+          path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding='utf-8')
+          PY
+          python scripts/render_pjs_demo.py \
+            --bank songsmith/voicebank/pjs \
+            --out songsmith/voicebank/pjs/demo_kimiwo_kiritaoshita.wav \
+            --phrase 'きみを きりたおした' \
+            --bpm 112
           du -sh songsmith/voicebank/pjs
-          test -f songsmith/voicebank/pjs/manifest.json
+          test -s songsmith/voicebank/pjs/manifest.json
+          test -s songsmith/voicebank/pjs/demo_kimiwo_kiritaoshita.wav
 
-      - name: Commit generated voicebank
+      - name: Commit generated voicebank and demo
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
@@ -61,7 +85,7 @@ jobs:
           if git diff --cached --quiet; then
             echo 'Voicebank unchanged.'
           else
-            git commit -m 'Build PJS RealVoice browser bank'
+            git commit -m 'Build PJS RealVoice preview audio'
             git fetch origin master
             git rebase origin/master
             git push origin HEAD:master
