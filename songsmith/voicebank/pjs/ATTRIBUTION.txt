@@ -1,0 +1,14 @@
+PJS RealVoice Prototype voicebank
+
+Derived from:
+PJS: Phoneme-balanced Japanese Singing-voice corpus
+Junya Koguchi and Shinnosuke Takamichi
+https://sites.google.com/site/shinnosuketakamichi/research-topics/pjs_corpus
+
+Manual labels:
+UtaUtaUtau/pjs-manual-labels
+https://github.com/UtaUtaUtau/pjs-manual-labels
+
+Original corpus and manual labels are licensed under CC BY-SA 4.0.
+This derivative voicebank is distributed under CC BY-SA 4.0.
+https://creativecommons.org/licenses/by-sa/4.0/
